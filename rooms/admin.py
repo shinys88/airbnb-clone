@@ -29,7 +29,7 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country", "city", "address", "price")},
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         (
@@ -83,6 +83,11 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "house_rules",
     )
+
+    # admin에서만 저장 오버라이드 할 때 사용
+    # def save_model(self, request, obj, form, change):
+    #     print(obj, change, form)
+    #     super().save_model(request, obj, form, change)
 
     def count_amenities(self, obj):
 
