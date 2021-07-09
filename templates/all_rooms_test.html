@@ -1,0 +1,13 @@
+<h1>Helo!</h1>
+
+<h4>The time right now is: {{rooms.now}}</h4>
+
+<h5>I'm hungry {{rooms.hungry}}</h5>
+
+<h6>
+    {% if rooms.hungry %}
+    I'm hungry
+    {% else %}
+    I'm okay
+    {% endif %}
+</h6>
