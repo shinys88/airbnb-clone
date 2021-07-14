@@ -88,3 +88,7 @@ class HomeView(ListView):
         now = timezone.now()
         context["now"] = now
         return context
+
+    def room_detail(request):
+
+        render(request, "rooms/detail.html")
