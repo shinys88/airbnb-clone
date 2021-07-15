@@ -70,8 +70,6 @@ def all_rooms(request):
 # 4. 아래는 django Class Base View 사용
 from django.utils import timezone
 from django.views.generic import ListView, DetailView
-from django.urls import reverse
-from django.http import Http404
 
 
 class HomeView(ListView):
@@ -93,6 +91,10 @@ class HomeView(ListView):
 
 
 # 5-1. 상세페이지 함수방식
+from django.urls import reverse
+from django.http import Http404
+
+
 def room_detail(request, pk):
     try:
         room = models.Room.objects.get(pk=pk)
