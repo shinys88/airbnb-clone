@@ -3,6 +3,8 @@
 # 1. Django import
 from django.db import models
 
+from django.urls import reverse
+
 # 2. 외부 패키지 import
 from django_countries.fields import CountryField
 
@@ -97,6 +99,11 @@ class Room(core_models.TimeStampedModel):
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)
         super().save(*args, **kwargs)
+
+    # admin 패널 상세페이지에서 viw on site 추가하기
+    def get_absolute_url(self):
+        # return "/photato"
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
 
     def total_rating(self):
         all_reviews = self.reviews.all()

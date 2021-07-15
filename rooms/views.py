@@ -89,6 +89,7 @@ class HomeView(ListView):
         context["now"] = now
         return context
 
-    def room_detail(request):
 
-        render(request, "rooms/detail.html")
+def room_detail(request, pk):
+
+    return render(request, "rooms/detail.html")
