@@ -149,8 +149,8 @@ def search(request):
     choices = {
         "countries": countries,
         "room_types": room_types,
-        "amenities":amenities,
-        "facilities":facilities,
+        "amenities": amenities,
+        "facilities": facilities,
     }
 
     return render(
