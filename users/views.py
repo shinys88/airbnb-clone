@@ -52,7 +52,7 @@ class LoginFormView(FormView):
     # UserView => username과 password를 사용하야함. email 사용 불가능하여 FormView 추천
 
     template_name = "users/login.html"
-    form_class = forms.LoginForm()
+    form_class = forms.LoginForm
     success_url = reverse_lazy("core:home")
     initial = {
         "email": "sys0130@naver.com"
