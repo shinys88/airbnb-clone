@@ -24,7 +24,9 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.Form):
+
+# 1. Model, Form 분리 방식
+class SignUpForm1(forms.Form):
 
     first_name = forms.CharField(max_length=80)
     last_name = forms.CharField(max_length=80)
@@ -57,4 +59,39 @@ class SignUpForm(forms.Form):
         user = models.User.objects.create_user(email, email=email, password=password)
         user.first_name = first_name
         user.last_name = last_name
+        user.save()
+
+
+
+
+# 2. Model, Form 연결 방식 => forms.ModelForm
+class SignUpForm(forms.ModelForm):
+
+    # ModelForm Metadata
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email")
+
+    password = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+
+
+    # 순차적으로 벨리데이션을 하기때문에 password 이후에 password1 실행됨.
+    def clean_password1(self):
+        password = self.cleaned_data.get("password")
+        password1 = self.cleaned_data.get("password1")
+
+        if password != password1:
+            raise forms.ValidationError("Password confirmation does not match")
+
+    # ModelForm에는 save메서드가 정의되어 있음.
+    def save(self, *args, **kwargs):
+        # commit=False  >  Object에 저장하고 DB에는 올리지 않는다.
+        user = super().save(commit=False)
+        email = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
+        # username = self.cleaned_data.get("username")
+        user.username = email
+        # set_password => 암호화
+        user.set_password(password)
         user.save()

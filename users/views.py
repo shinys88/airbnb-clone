@@ -69,9 +69,7 @@ class LoginFormView(FormView):
             login(self.request, user)
         return super().form_valid(form)
 
-  
 
-# 회원가입 FormView
 class SignUpView(FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
@@ -91,7 +89,4 @@ class SignUpView(FormView):
         if user is not None:
             login(self.request, user)
 
-            
         return super().form_valid(form)
-
-    
