@@ -45,6 +45,7 @@ def log_out(request):
 
 
 
+# class기반 FormView
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 class LoginFormView(FormView):
@@ -53,6 +54,7 @@ class LoginFormView(FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
+      # reverse_lazy : reverse와 같은데 자동으로 호출하지 않음 / View가 필요로 할때 호출
     success_url = reverse_lazy("core:home")
     initial = {
         "email": "sys0130@naver.com"
@@ -67,7 +69,29 @@ class LoginFormView(FormView):
             login(self.request, user)
         return super().form_valid(form)
 
+  
 
+# 회원가입 FormView
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    success_url = reverse_lazy("core:home")
+    initial = {
+        "first_name":"YS",
+        "last_name":"Shin",
+        "email":"sys0130@naver.com",
+    }
 
+    def form_valid(self, form):
+        form.save()
 
-    # reverse_lazy : reverse와 같은데 자동으로 호출하지 않음 / View가 필요로 할때 호출
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+
+            
+        return super().form_valid(form)
+
+    
