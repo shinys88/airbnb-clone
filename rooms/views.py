@@ -314,3 +314,54 @@ class SearchView(View):
         # unbound form
 
         return render(request, "rooms/search.html", {"form":form})
+
+
+
+
+
+from django.views.generic import UpdateView
+from users import mixins as user_mixins
+from django.http import Http404
+
+
+# 챕터24. Room 수정, 생성, 이미지
+class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
+    model = models.Room
+    template_name = "rooms/room_edit.html"
+    fields = (
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+    )
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    model = models.Room
+    template_name = "rooms/room_photos.html"
+
+    # def get_object(self, queryset=None):
+    #     room = super().get_object(queryset=queryset)
+    #     if room.host.pk != self.request.user.pk:
+    #         raise Http404()
+    #     return room
