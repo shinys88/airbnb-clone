@@ -1,6 +1,6 @@
 from math import ceil
 from datetime import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from . import models, forms
 
@@ -360,8 +360,28 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
     model = models.Room
     template_name = "rooms/room_photos.html"
 
-    # def get_object(self, queryset=None):
-    #     room = super().get_object(queryset=queryset)
-    #     if room.host.pk != self.request.user.pk:
-    #         raise Http404()
-    #     return room
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+
+#사진 삭제
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+@login_required
+def delete_photo(request, room_pk, photo_pk):
+    user = request.user
+    try:
+        room = models.Room.objects.get(pk=room_pk)
+        if room.host.pk != user.pk:
+            messages.error(request, "cant delete that photo")
+        else:
+            models.Photo.objects.filter(pk=photo_pk).delete()
+            messages.success(request, "Photo Deleted")
+        return redirect(reverse("rooms:photos", kwargs={"pk": room_pk}))
+
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))

@@ -141,3 +141,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = "media/"
 # 절대경로
 MEDIA_URL = "/media/"
+
+
+
+# Email Configuration => 강의 스킵.
+
+# Auth
+LOGIN_URL = "/users/login"
