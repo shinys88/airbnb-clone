@@ -90,3 +90,19 @@ class SignUpView(FormView):
             login(self.request, user)
 
         return super().form_valid(form)
+
+
+
+
+from django.http import HttpResponse
+
+def switch_language(request):
+
+    lang = request.GET.get("lang", None)
+    if lang is not None:
+        pass
+
+    print(lang)
+
+    return HttpResponse(status=200)
+
