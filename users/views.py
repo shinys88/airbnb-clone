@@ -95,14 +95,13 @@ class SignUpView(FormView):
 
 
 from django.http import HttpResponse
+from django.utils import translation
 
 def switch_language(request):
 
     lang = request.GET.get("lang", None)
     if lang is not None:
-        pass
-
-    print(lang)
+        request.session[translation.LANGUAGE_SESSION_KEY] = lang
 
     return HttpResponse(status=200)
 

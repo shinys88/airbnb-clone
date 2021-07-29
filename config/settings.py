@@ -63,7 +63,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",    # 세션이 변경되면 template에서 translation을 실행.
 ]
+
 
 ROOT_URLCONF = "config.urls"
 
