@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 {% block page_title %}
 Home
@@ -22,7 +22,10 @@ Home
     {% if page_obj.has_previous %}
     <a href="?page={{page_obj.previous_page_number}}">Previous</a>
     {% endif %}
-    {% trans "Page" %} {{page_obj.number}} {% trans "of" %} {{page_obj.paginator.num_pages}}
+
+
+    {% blocktrans with current_page=page_obj.number total_pages=page_obj.paginator.num_pages %}Page {{current_page}} of {{total_pages}}{% endblocktrans %}
+
 
     {% if page_obj.has_next %}
     <a href="?page={{page_obj.next_page_number}}">Next</a>
