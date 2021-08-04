@@ -7,40 +7,39 @@ Home
 
 {% block content %}
 
-    <div class="container rounded-lg mx-auto bg-gray-800 w-full h-50vh ">aaa</div>
+    <div class="container mx-auto pb-10">
+        <div class="rounded-xl bg-gray-800 -mx-20 h-50vh mt-32 mb-20 bg-cover " style="background-image: url(https://images.unsplash.com/photo-1619681202742-151773758844?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop);"></div>
+        
+        <div class="flex flex-wrap -mx-20 mb-10">
+            {% for room in rooms %}
+                {% include 'partials/room_card.html' with room=room %}
+            {% endfor %}
+        </div>
+        
+        <div class="flex items-center justify-center">
+            {% if page_obj.has_previous %}
+            <a href="?page={{page_obj.previous_page_number}}" class="text-green-400"><i class="fas fa-lg fa-arrow-left"></i></a>
+            {% endif %}
+        
+            <span class="mx-3 font-medium text-lg">
+                {% blocktrans with current_page=page_obj.number total_pages=page_obj.paginator.num_pages %}Page {{current_page}} of {{total_pages}}{% endblocktrans %}
+            </span>
+        
+            {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}" class="text-green-400"><i class="fas fa-lg fa-arrow-right"></i></a>
+            {% endif %}
+        
+        </div>
+        
+        
+        
+        {% for page in page.paginator.page_range %}
+        
+        <a href="?page={{page}}">{{page}}</a>
+        
+        {% endfor %}
 
-{{now}}
+    </div>
 
-{% for room in rooms %}
-<h6>
-    <!-- <a href="/rooms/{{room.pk}}"> -->
-    <a href='{% url "rooms:detail" room.pk %}'>
-        {{room.name}} / ${{room.price}}
-    </a>
-</h6>
-{% endfor %}
-
-<h5>
-    {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previous_page_number}}">Previous</a>
-    {% endif %}
-
-
-    {% blocktrans with current_page=page_obj.number total_pages=page_obj.paginator.num_pages %}Page {{current_page}} of {{total_pages}}{% endblocktrans %}
-
-
-    {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number}}">Next</a>
-    {% endif %}
-
-</h5>
-
-
-
-{% for page in page.paginator.page_range %}
-
-<a href="?page={{page}}">{{page}}</a>
-
-{% endfor %}
 
 {% endblock content %}

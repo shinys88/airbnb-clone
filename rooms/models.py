@@ -116,6 +116,25 @@ class Room(core_models.TimeStampedModel):
             return round(all_ratings / len(all_reviews))
         return 0
 
+    def first_photo(self):
+
+        # unpacking values : 
+        # one, two, three, four = self.photos.all()[:1]
+        
+        #변수명 끝에 쉼표(,)를 넣으면 array의 첫번째 value라는걸 알게됨.
+        photo_all = self.photos.all()
+
+
+        if len(photo_all) > 0 :
+            photo, = photo_all[:1]
+            return photo.file.url
+        else :
+            return "/media/room_photos/23.webp"
+
+
+
+        
+
 
 class Photo(core_models.TimeStampedModel):
 
