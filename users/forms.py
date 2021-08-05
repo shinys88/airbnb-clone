@@ -3,8 +3,9 @@ from . import models
 
 class LoginForm(forms.Form):
 
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder':'Email'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
+    # password = forms.CharField(widget=forms.PasswordInput)
 
     def clean(self):
 
@@ -72,8 +73,14 @@ class SignUpForm(forms.ModelForm):
         model = models.User
         fields = ("first_name", "last_name", "email")
 
-    password = forms.CharField(widget=forms.PasswordInput)
-    password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+        widgets = {
+            'first_name': forms.TextInput(attrs={"placeholder":"First Name"}),
+            'last_name': forms.TextInput(attrs={"placeholder":"Last Name"}),
+            'email': forms.EmailInput(attrs={"placeholder":"Email"}),
+        }
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password"}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Confirm Password"}), label="Confirm Password")
 
 
     # 순차적으로 벨리데이션을 하기때문에 password 이후에 password1 실행됨.

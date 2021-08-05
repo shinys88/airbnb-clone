@@ -20,8 +20,12 @@ Log In
         {% csrf_token %}
         <!-- {{form.as_p}} -->
 
-        <input type="email" placeholder="Email" class="mb-3">
-        <input type="password" placeholder="Password" class="mb-3">
+        <!-- <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password"> -->
+
+        {{form.email}}
+        {{form.password}}
+
         <button class="btn bg-red-500 text-white">Login</button>
     </form>
 
