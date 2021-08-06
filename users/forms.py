@@ -21,6 +21,9 @@ class LoginForm(forms.Form):
                 # raise forms.ValidationError("Password is wrong")
                 # 2) clean함수 error출력 방식
                 self.add_error("password", forms.ValidationError("Password is wrong"))
+
+                # None field error
+                # self.add_error(None, forms.ValidationError("Password is wrong"))
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError("User does not exist"))
 
@@ -82,6 +85,16 @@ class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password"}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Confirm Password"}), label="Confirm Password")
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError(
+                "That email is already taken", code="existing_user"
+            )
+        except models.User.DoesNotExist:
+            return email
+            
 
     # 순차적으로 벨리데이션을 하기때문에 password 이후에 password1 실행됨.
     def clean_password1(self):
