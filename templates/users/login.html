@@ -23,10 +23,14 @@ Log In
         <!-- <input type="email" placeholder="Email">
         <input type="password" placeholder="Password"> -->
 
-        {{form.email}}
-        {{form.password}}
+        <!-- {{form.email}}
+        {{form.password}} -->
 
-        <button class="btn bg-red-500 text-white">Login</button>
+        {% include 'mixins/auth/auth_form.html' with form=form cta="Log in" %}
+
+
+        <!-- <button class="btn bg-red-500 text-white">Login</button> -->
+
     </form>
 
     <div class="mt-5">

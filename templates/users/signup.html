@@ -17,7 +17,7 @@ Sign Up
 
 {% include 'partials/social_login.html' %}
 
-{% include 'partials/auth_form.html' with form=form cta="Sign up" %}
+{% include 'mixins/auth/auth_form.html' with form=form cta="Sign up" %}
 
 <!-- <form class="w-full" method="POST" action={% url 'users:signup' %}>
     {% csrf_token %}
