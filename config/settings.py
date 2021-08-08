@@ -24,6 +24,7 @@ SECRET_KEY = "k4$b7$_z09!j=5qf+^y(*v@*06#(hs(1(%t1_z6@i!v$0evz_w"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = bool(os.environ.get("DEBUG"))
 
 ALLOWED_HOSTS = ["shinys88.com"]
 
